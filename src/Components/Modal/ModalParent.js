@@ -1,8 +1,8 @@
 import IntroModal from './IntroModal';
 import LocationModal from './LocationModal';
-import {useState} from 'react';
 
-const ModalParent = ({ introModalOpen, setIntroModalOpen, locationModalOpen, setLocationModalOpen, getUserLocation, viewport, setViewport, setSearchViewport, mapRef, containerRef, closeLocationModal }) => {
+
+const ModalParent = ({ introModalOpen, setIntroModalOpen, locationModalOpen, setLocationModalOpen, getUserLocation, viewport, setViewport, setSearchViewport, mapRef, containerRef, closeLocationModal, setSearchCategory, setSearchType }) => {
     
 
     function closeIntroModal(){
@@ -17,7 +17,7 @@ const ModalParent = ({ introModalOpen, setIntroModalOpen, locationModalOpen, set
     
     return (
         <div>
-            <IntroModal isOpen={introModalOpen} close={closeIntroModal} openLocationModal={openLocationModal}></IntroModal>
+            <IntroModal isOpen={introModalOpen} close={closeIntroModal} openLocationModal={openLocationModal} setSearchCategory={setSearchCategory} setSearchType={setSearchType}></IntroModal>
             <LocationModal isOpen={locationModalOpen} close={closeLocationModal} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef}></LocationModal>
         </div>
     )

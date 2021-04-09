@@ -37,16 +37,7 @@ const routes = [
 ]
 
 export default function App () {
-
-  const containerRef = useRef(null);
-  const [introModalOpen, setIntroModalOpen] = useState(true);
-  const [locationModalOpen, setLocationModalOpen] = useState(false);
-
-  const closeLocationModal = () => {
-    setLocationModalOpen(false);
-}
-
-
+  console.log(Date.now());
 
   // Map viewport state
   const [viewport, setViewport] = useState({
@@ -60,11 +51,30 @@ export default function App () {
 
   // Search Data from Yelp
   const [searchData, setSearchData] = useState(null);
+  // Search Type
+  const [searchType, setSearchType] = useState('businesses/search?categories=')
+  // Search Category
+  const [searchCategory, setSearchCategory] = useState('');
   // User Position Coordinates State
   const [userPosition, setUserPosition] = useState(null);
 
+  const [introModalOpen, setIntroModalOpen] = useState(true);
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  
+  
+
+  const closeLocationModal = () => {
+    setLocationModalOpen(false);
+}
+
+
+
+  
+
   // Ref for Map
   const mapRef = useRef();
+  // Ref for search container
+  const containerRef = useRef(null);
 
   // Seting userposition state
   const setUserLocation = (pos) => {
@@ -80,7 +90,7 @@ export default function App () {
   }
   
   const searchParams = {
-    baseUrl: 'https://project2-proxy.herokuapp.com/https://api.yelp.com/v3/businesses/search?categories=food&',
+    baseUrl: 'https://project2-proxy.herokuapp.com/https://api.yelp.com/v3/',
     apiKey: process.env.REACT_APP_YELP_KEY,
     
   }
@@ -90,7 +100,7 @@ export default function App () {
       return
     }
     try {
-      const response = await fetch(`${searchParams.baseUrl}latitude=${param.latitude}&longitude=${param.longitude}&limit=50`, {
+      const response = await fetch(`${searchParams.baseUrl}${searchType}${searchCategory}&latitude=${param.latitude}&longitude=${param.longitude}&limit=50`, {
         "method": "GET",
         "headers": {
           "Authorization": `Bearer ${searchParams.apiKey}`
@@ -125,10 +135,10 @@ export default function App () {
 
   return (
     <div>
-      <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} containerRef={containerRef}>
-        <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} locationModalOpen={locationModalOpen} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
+      <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory}>
+        <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
       </Map>
-      <ModalParent introModalOpen={introModalOpen} setIntroModalOpen={setIntroModalOpen} locationModalOpen={locationModalOpen} setLocationModalOpen={setLocationModalOpen} closeLocationModal={closeLocationModal} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef}></ModalParent>
+      <ModalParent introModalOpen={introModalOpen} setIntroModalOpen={setIntroModalOpen} locationModalOpen={locationModalOpen} setLocationModalOpen={setLocationModalOpen} closeLocationModal={closeLocationModal} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} setSearchCategory={setSearchCategory} setSearchType={setSearchType}></ModalParent>
       
     </div>
     

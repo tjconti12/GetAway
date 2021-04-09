@@ -11,7 +11,7 @@ const geolocateControlStyle= {
     bottom: 25
 }
 
-const Map = ({ searchData, useUserLocation, viewport, setViewport, mapRef, containerRef, children }) => {
+const Map = ({ searchData, viewport, setViewport, mapRef, children, searchType, searchCategory }) => {
     
 
     const [selected, setSelected] = useState(null);
@@ -23,6 +23,7 @@ const Map = ({ searchData, useUserLocation, viewport, setViewport, mapRef, conta
         <div>
             
             <ReactMapGL 
+            mapStyle="mapbox://styles/mapbox/outdoors-v11"
             {...viewport}
             height="90vh"
             width="100vw"
@@ -34,8 +35,8 @@ const Map = ({ searchData, useUserLocation, viewport, setViewport, mapRef, conta
             
             <GeolocateControl style={geolocateControlStyle}  />    {/*positionOptions={{enableHighAccuracy: true}} trackUserLocation={true} showUserLocation={true} auto */}
             
-            <SearchMarkers searchData={searchData} setSelected={setSelected}></SearchMarkers>
-            <PopupComponent selected={selected} setSelected={setSelected}></PopupComponent>
+            <SearchMarkers searchData={searchData} setSelected={setSelected} searchType={searchType} searchCategory={searchCategory}></SearchMarkers>
+            <PopupComponent selected={selected} setSelected={setSelected} searchType={searchType}></PopupComponent>
             {children}
             </ReactMapGL>
         </div>
