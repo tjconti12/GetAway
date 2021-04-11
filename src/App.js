@@ -7,8 +7,12 @@ import Map from './Components/Map/Map';
 import Other from './Other'
 import Home from './Home'
 
-import ModalParent from './Components/Modal/ModalParent';
+
 import SearchBar from './Components/SearchBar/SearchBar';
+import Navbar from './Components/Navbar/Navbar';
+import CustomSearch from './Components/CustomSearch/CustomSearch';
+import IntroModal from './Components/Modal/IntroModal';
+import LocationModal from './Components/Modal/LocationModal';
 
 
 
@@ -65,9 +69,17 @@ export default function App () {
 
   const closeLocationModal = () => {
     setLocationModalOpen(false);
-}
+  }
+
+  const closeIntroModal = () => {
+    setIntroModalOpen(false);
+  }
 
 
+
+  const openLocationModal = () => {
+    setLocationModalOpen(true);
+  }
 
   
 
@@ -130,16 +142,33 @@ export default function App () {
     getDetailsByLocation(searchViewport);
   }, [searchViewport])
 
-  
+
 
 
   return (
     <div>
-      <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory}>
-        <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
-      </Map>
-      <ModalParent introModalOpen={introModalOpen} setIntroModalOpen={setIntroModalOpen} locationModalOpen={locationModalOpen} setLocationModalOpen={setLocationModalOpen} closeLocationModal={closeLocationModal} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} setSearchCategory={setSearchCategory} setSearchType={setSearchType}></ModalParent>
-      
+      <Route exact path="/">
+        <Navbar></Navbar>
+        <IntroModal isOpen={introModalOpen} close={closeIntroModal} openLocationModal={openLocationModal} setSearchCategory={setSearchCategory} setSearchType={setSearchType}></IntroModal>
+        <Map viewport={viewport} setViewport={setViewport} introModalOpen={introModalOpen}></Map>
+      </Route>
+      <Route exact path="/Search">
+        <Navbar setIntroModalOpen={setIntroModalOpen} ></Navbar>
+        <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory}>
+          <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
+        </Map>
+        <LocationModal isOpen={locationModalOpen} close={closeLocationModal} setIntroModalOpen={setIntroModalOpen} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef}></LocationModal>
+      </Route>
+      <Route path="/Map">
+        <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
+        <Map viewport={viewport} setViewport={setViewport} mapRef={mapRef}>
+          <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef}></SearchBar>
+        </Map>
+      </Route>
+      <Route path="/CustomSearch">
+        <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
+        <CustomSearch></CustomSearch>
+      </Route>
     </div>
     
   )

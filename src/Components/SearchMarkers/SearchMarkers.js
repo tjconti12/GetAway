@@ -4,7 +4,10 @@ import foodLogo from '../../food-icon.svg';
 import exploreLogo from '../../TriangleLogo.svg';
 import eventLogo from '../../eventLogo.svg';
 
-const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory }) => {
+const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, introModalOpen }) => {
+    if (introModalOpen) {
+      return null;
+    }
     if (searchData === {} || searchData === null || searchData === undefined) {
         return <h1>Loading</h1>
     } else if (searchData.total === 0) {

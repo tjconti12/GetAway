@@ -1,13 +1,13 @@
 import ModalElement from './ModalElement';
 import {useState, useRef, useEffect, useCallback} from 'react';
-
+import {Link} from 'react-router-dom';
 import Geocoder from 'react-map-gl-geocoder';
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Modal.css';
 
 
 
-const LocationModal = ({ isOpen, close, getUserLocation, viewport, setViewport, setSearchViewport, mapRef, containerRef }) => {
+const LocationModal = ({ isOpen, close, setIntroModalOpen, getUserLocation, viewport, setViewport, setSearchViewport, mapRef, containerRef }) => {
     // const containerRef = useRef();
     // const inputEl = useRef(null)
     // console.log(inputEl);
@@ -27,33 +27,14 @@ const LocationModal = ({ isOpen, close, getUserLocation, viewport, setViewport, 
                 <h1>Where Do You Want To Search?</h1>
                 <div id="search-container" ref={containerRef}></div>
                 <p>Or</p>
-                <button onClick={() => {
+                <button className="search-by-location-btn" onClick={() => {
                     close()
                     getUserLocation()
                 }}>Current Location</button>
-                <button onClick={close}>Close</button>
-                
-                
-                    
-                    
-                
-                
-                
-                
-                {/* <Geocoder
-                    
-                    mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-                    onSelected={(viewport) => {
-                    setSearchViewport(viewport);
-                    setViewport(viewport);
+                <Link to="/"><button className="back-btn" onClick={() => {
                     close();
-                    }}
-                    viewport={viewport}
-                    hideOnSelect={false}
-                    value=""
-                >
-                </Geocoder> */}
-
+                    setIntroModalOpen(true);
+                }}>Back</button></Link>
             </ModalElement>
             
         </div>
