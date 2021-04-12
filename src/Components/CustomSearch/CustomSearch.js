@@ -1,4 +1,3 @@
-import {Link} from 'react-router-dom';
 import "./CustomSearch.css";
 
 const CustomSearch = ({ handleSubmit, handleCityChange, handleTermChange, handleNumOfResultsChange }) => {

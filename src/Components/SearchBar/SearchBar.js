@@ -1,6 +1,6 @@
 import Geocoder from 'react-map-gl-geocoder';
 import {useCallback, useEffect} from 'react';
-import IntroModal from '../Modal/IntroModal';
+
 
 const SearchBar = ({ setViewport, viewport, setSearchViewport, mapRef, containerRef, closeLocationModal, introModalOpen }) => {
 

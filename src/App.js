@@ -1,55 +1,48 @@
-import './App.css';
-import { HashRouter as Router, Route, Switch, Link, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-
 import Map from './Components/Map/Map';
-
-import Other from './Other'
-import Home from './Home'
-
-
 import SearchBar from './Components/SearchBar/SearchBar';
 import Navbar from './Components/Navbar/Navbar';
 import CustomSearch from './Components/CustomSearch/CustomSearch';
 import IntroModal from './Components/Modal/IntroModal';
 import LocationModal from './Components/Modal/LocationModal';
-import CustomResults from './Components/CustomSearch/CustomResults/CustomResults';
+import CustomResults from './Components/CustomResults/CustomResults';
 
 
-
-// Save the Component, key and path in an array of objects for each Route
-// You could write all routes by hand but I'm lazy annd this lets me use
-// the map method to just loop over them and make my routes
-// SWITCH is used so that it only ever matches one route at a time
-// If you don't want to use react router just rewrite the app component to not use it
-
-const routes = [
-  {
-    Component: Other,
-    key: 'Other',
-    path: '/other'
-  },
-  {
-    Component: Other,
-    key: 'Another',
-    path: '/another'
-  },
-  {
-    Component: Home,
-    key: 'Home',
-    path: '/'
-  }
-]
 
 export default function App () {
   
+  // Map viewport state
+  const [viewport, setViewport] = useState({
+    latitude: 28.5421109,
+    longitude: -81.3790304,
+    zoom: 10
+  })
+
+  const [searchViewport, setSearchViewport] = useState(null);
+
+  // Search Data from Yelp
+  const [searchData, setSearchData] = useState(null);
+  // Search Type
+  const [searchType, setSearchType] = useState('businesses/search?categories=')
+  // Search Category
+  const [searchCategory, setSearchCategory] = useState('');
+  // User Position Coordinates State
+  const [userPosition, setUserPosition] = useState(null);
+
+  const [introModalOpen, setIntroModalOpen] = useState(true);
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+
+  // Declaring History to use for redirect in popup link
   const history = useHistory();
 
+  // State For Custom Search
   const [city, setCity] = useState(null);
   const [searchTerm, setsearchTerm] = useState(null);
   const [numOfResults, setNumOfResults] = useState(1);
   const [resultData, setResultData] = useState(null);
 
+  // Functions for Custom Search
   const handleCityChange = (event) => {
       setCity(event.target.value);
   }
@@ -90,51 +83,16 @@ export default function App () {
       }
     }
 
-  useEffect(() => {
-      console.log(resultData)
-  }, [resultData])
 
 
+  // This function redirects user after clicking the see more details in the popup
   const handleMapDetailClick = () => {
     history.push('/SearchResults')
-    console.log('pussssheddd')
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  // Map viewport state
-  const [viewport, setViewport] = useState({
-    latitude: 28.5421109,
-    longitude: -81.3790304,
-    zoom: 10
-  })
-
-  const [searchViewport, setSearchViewport] = useState(null);
-
-
-  // Search Data from Yelp
-  const [searchData, setSearchData] = useState(null);
-  // Search Type
-  const [searchType, setSearchType] = useState('businesses/search?categories=')
-  // Search Category
-  const [searchCategory, setSearchCategory] = useState('');
-  // User Position Coordinates State
-  const [userPosition, setUserPosition] = useState(null);
-
-  const [introModalOpen, setIntroModalOpen] = useState(true);
-  const [locationModalOpen, setLocationModalOpen] = useState(false);
   
   
+  // Modal Functions
 
   const closeLocationModal = () => {
     setLocationModalOpen(false);
@@ -170,6 +128,7 @@ export default function App () {
     navigator.geolocation.getCurrentPosition(setUserLocation)
   }
   
+  // Search Parameters for Map search
   const searchParams = {
     baseUrl: 'https://project2-proxy.herokuapp.com/https://api.yelp.com/v3/',
     apiKey: process.env.REACT_APP_YELP_KEY,
@@ -216,32 +175,34 @@ export default function App () {
 
   return (
     <div>
-      <Route exact path="/">
-        <Navbar></Navbar>
-        <IntroModal isOpen={introModalOpen} close={closeIntroModal} openLocationModal={openLocationModal} setSearchCategory={setSearchCategory} setSearchType={setSearchType}></IntroModal>
-        <Map viewport={viewport} setViewport={setViewport} introModalOpen={introModalOpen}></Map>
-      </Route>
-      <Route exact path="/Search">
-        <Navbar setIntroModalOpen={setIntroModalOpen} ></Navbar>
-        <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory} introModalOpen={introModalOpen} locationModalOpen={locationModalOpen} setResultData={setResultData} handleMapDetailClick={handleMapDetailClick}>
-          <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
-        </Map>
-        <LocationModal isOpen={locationModalOpen} close={closeLocationModal} setIntroModalOpen={setIntroModalOpen} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef}></LocationModal>
-      </Route>
-      <Route path="/Map">
-        <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
-        <Map viewport={viewport} setViewport={setViewport} mapRef={mapRef} handleMapDetailClick={handleMapDetailClick}>
-          <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} setResultData={setResultData}></SearchBar>
-        </Map>
-      </Route>
-      <Route path="/CustomSearch">
-        <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
-        <CustomSearch handleSubmit={handleSubmit} handleCityChange={handleCityChange} handleTermChange={handleTermChange} handleNumOfResultsChange={handleNumOfResultsChange}></CustomSearch>
-      </Route>
-      <Route path="/SearchResults">
-        <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
-        <CustomResults resultData={resultData}></CustomResults>
-      </Route>
+      <Switch>
+        <Route exact path="/">
+          <Navbar></Navbar>
+          <IntroModal isOpen={introModalOpen} close={closeIntroModal} openLocationModal={openLocationModal} setSearchCategory={setSearchCategory} setSearchType={setSearchType}></IntroModal>
+          <Map viewport={viewport} setViewport={setViewport} introModalOpen={introModalOpen}></Map>
+        </Route>
+        <Route exact path="/Search">
+          <Navbar setIntroModalOpen={setIntroModalOpen} ></Navbar>
+          <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory} introModalOpen={introModalOpen} locationModalOpen={locationModalOpen} setResultData={setResultData} handleMapDetailClick={handleMapDetailClick}>
+            <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
+          </Map>
+          <LocationModal isOpen={locationModalOpen} close={closeLocationModal} setIntroModalOpen={setIntroModalOpen} getUserLocation={getUserLocation} containerRef={containerRef}></LocationModal>
+        </Route>
+        <Route path="/Map">
+          <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
+          <Map viewport={viewport} setViewport={setViewport} mapRef={mapRef} handleMapDetailClick={handleMapDetailClick}>
+            <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} setResultData={setResultData}></SearchBar>
+          </Map>
+        </Route>
+        <Route path="/CustomSearch">
+          <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
+          <CustomSearch handleSubmit={handleSubmit} handleCityChange={handleCityChange} handleTermChange={handleTermChange} handleNumOfResultsChange={handleNumOfResultsChange}></CustomSearch>
+        </Route>
+        <Route path="/SearchResults">
+          <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
+          <CustomResults resultData={resultData}></CustomResults>
+        </Route>
+      </Switch>
     </div>
     
   )
@@ -250,18 +211,3 @@ export default function App () {
 
 
 
-{/* <Router>
-      <nav>
-        {routes.map(route => <Link key={route.key} to={route.path}>{route.key}</Link>)}
-      </nav>
-      <Switch>
-        {
-          routes.map(({key, Component, path}) => (
-            <Route
-              key={key}
-              path={path}
-              component={props => <Component {...props} page={key} />}
-              />))
-        }
-      </Switch>
-    </Router> */}

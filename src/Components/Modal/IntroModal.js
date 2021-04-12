@@ -6,7 +6,7 @@ import eventLogo from '../../SVGs/Event-icon-start.svg';
 import {Link} from 'react-router-dom';
 import "./Modal.css";
 
-
+// These categories are the only ones that will return with the yelp api
 const exploreCategories = "axethrowing,beachvolleyball,beaches,bungeejumping,climbing,escapegames,experiences,hiking,rock_climbing,sailing,skiing,snorkeling,arcades,gardens,outdoormovies,festivals,jazzandblues,artmuseums,wineries,hotsprings,tastingclasses,breweries,coffee,foodtrucks,streetvendors,tea,beertours,localflavor,bars,beergardens"
 
 

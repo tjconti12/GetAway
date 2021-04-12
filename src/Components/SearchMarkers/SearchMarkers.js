@@ -2,8 +2,8 @@ import {Marker} from 'react-map-gl';
 import Loader from "react-loader-spinner";
 import './SearchMarkers.css';
 import foodLogo from '../../SVGs/food-icon.svg';
-import exploreLogo from '../../TriangleLogo.svg';
-import eventLogo from '../../eventLogo.svg';
+import exploreLogo from '../../SVGs/TriangleLogo.svg';
+import eventLogo from '../../SVGs/eventLogo.svg';
 
 const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, introModalOpen, locationModalOpen }) => {
     if (introModalOpen || locationModalOpen) {

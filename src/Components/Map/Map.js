@@ -1,7 +1,5 @@
 import { useState, useCallback } from 'react';
 import ReactMapGL, {Marker, Popup, GeolocateControl} from 'react-map-gl';
-
-// import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import SearchMarkers from '../SearchMarkers/SearchMarkers';
 import PopupComponent from '../Popup/PopupComponent';
 
@@ -21,7 +19,6 @@ const Map = ({ searchData, viewport, setViewport, mapRef, children, searchType, 
 
     return (
         <div>
-            
             <ReactMapGL 
             mapStyle="mapbox://styles/mapbox/outdoors-v11"
             {...viewport}

@@ -1,4 +1,3 @@
-import {Link} from 'react-router-dom';
 import {Popup} from 'react-map-gl';
 import './Popup.css';
 
