@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react';
 const CustomResults = ({ resultData }) => {
 
 const [searchData, setSearchData] = useState(null);
-console.log(resultData);
+
 
 useEffect(() => {
     setSearchData(null);
@@ -34,7 +34,7 @@ console.log(searchData);
                         <hr />
                         <h3 className="result-title">{result.name}</h3>
                         <div className="result-img-container">
-                            <img className="result-img" src={result.image_url} alt="business photo" />
+                            <img className="result-img" src={result.image_url} alt="business" />
                         </div>
                         <p className="open-status">We are currently <span className="open-span">{result.is_closed ? "Closed" : "Open"}</span></p>
                         <h3 className="location">Location:</h3>

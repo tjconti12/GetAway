@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import {Marker} from 'react-map-gl';
 import Loader from "react-loader-spinner";
 import './SearchMarkers.css';
@@ -6,7 +7,9 @@ import exploreLogo from '../../SVGs/TriangleLogo.svg';
 import eventLogo from '../../SVGs/eventLogo.svg';
 
 const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, introModalOpen, locationModalOpen }) => {
-    if (introModalOpen || locationModalOpen) {
+  const location = useLocation();
+   
+  if (introModalOpen || locationModalOpen || location.pathname === "/Map") {
       return null;
     }
     if (searchData === {} || searchData === null || searchData === undefined) {
@@ -19,7 +22,7 @@ const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, in
          
     } else if (searchData.total === 0) {
       return <h1>No Results Found</h1>
-    } else if (searchType == 'events?') {
+    } else if (searchType === 'events?') {
       return (
         <div>
           {searchData.events.map((event) => {

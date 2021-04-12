@@ -6,7 +6,6 @@ const SearchBar = ({ setViewport, viewport, setSearchViewport, mapRef, container
 
     const handleSearchViewport = (newViewport) => {
         setSearchViewport(newViewport);
-        console.log('yes', newViewport)
     }
 
     const handleViewportChange = useCallback(

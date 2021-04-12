@@ -7,7 +7,7 @@ const PopupComponent = ({ selected, setSelected, searchType, setResultData, hand
     if(!selected) {
         return null;
     }
-    if (searchType == 'events?') {
+    if (searchType === 'events?') {
         return (
             <div>
                 <Popup latitude={selected.latitude} longitude={selected.longitude} onClose={() => {

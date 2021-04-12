@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import ReactMapGL, {Marker, Popup, GeolocateControl} from 'react-map-gl';
+import { useState} from 'react';
+import ReactMapGL, {GeolocateControl} from 'react-map-gl';
 import SearchMarkers from '../SearchMarkers/SearchMarkers';
 import PopupComponent from '../Popup/PopupComponent';
 

@@ -118,7 +118,6 @@ export default function App () {
   // Seting userposition state
   const setUserLocation = (pos) => {
     const crd = pos.coords;
-    console.log(crd.latitude, crd.longitude)
     setUserPosition({latitude: crd.latitude, longitude: crd.longitude})
     setViewport({latitude: crd.latitude, longitude: crd.longitude, width: '100vw', height: '95vh', zoom: 12})
     
@@ -159,14 +158,10 @@ export default function App () {
 
   
   useEffect(() => {
-    console.log('searching user useEffect');
-    console.log(userPosition);
     getDetailsByLocation(userPosition);
   }, [userPosition]);
 
   useEffect(() => {
-    console.log('searching city useEffect')
-    console.log(searchViewport);
     getDetailsByLocation(searchViewport);
   }, [searchViewport])
 
