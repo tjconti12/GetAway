@@ -1,8 +1,8 @@
-
+import {Link} from 'react-router-dom';
 import {Popup} from 'react-map-gl';
 import './Popup.css';
 
-const PopupComponent = ({ selected, setSelected, searchType }) => {
+const PopupComponent = ({ selected, setSelected, searchType, setResultData, handleMapDetailClick }) => {
     
     
     if(!selected) {
@@ -25,17 +25,24 @@ const PopupComponent = ({ selected, setSelected, searchType }) => {
     }
     return (
         <div>
-            <Popup latitude={selected.coordinates.latitude} longitude={selected.coordinates.longitude} onClose={() => {
+            <Popup latitude={selected.coordinates.latitude} longitude={selected.coordinates.longitude} closeOnClick={false} onClose={() => {
                 setSelected(null);
             }}>
-                <h2>{selected.name}</h2>
-                <h3>Type: {}
-                    {selected.categories.map((element) => {
-                        return (<span>{element.title}, </span>)
-                    })}
-                </h3>
-                
-                
+                <div className="popup">
+                    <h2 className="popup-name">{selected.name}</h2>
+                    <div className="popup-img-container">
+                        <img className="popup-img" src={selected.image_url} alt={selected.id} />
+                    </div>
+                    <h3 className="popup-type">Type: {}
+                        {selected.categories.map((element) => {
+                            return (<span>{element.title}, </span>)
+                        })}
+                    </h3>
+                    <button className="popup-moreInfo-btn" onClick={() => {
+                        setResultData({businesses: [selected]});
+                        handleMapDetailClick();
+                    }}>See More Info</button>
+                </div>
             </Popup>
         </div>
     )

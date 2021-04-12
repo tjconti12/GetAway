@@ -1,10 +1,22 @@
 
 
 .page-container {
-    background: #9AD2CB;
-    margin-top: 30px;
-    padding-top: 10px;
+    background: whitesmoke;
+    padding-top: 20px;
     height: 100vh;
+}
+
+.loader {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.loader h1 {
+    margin-bottom: 20px;
+    margin-left: -20px;
+    font-family: 'Chronicle Display', serif;
 }
 
 .custom-search-container {
@@ -15,19 +27,23 @@
     margin-top: 30px;
     height: 80vh;
     font-family: "Hack", monospace;
+    border: 3px solid black;
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(230,232,230,0); 
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(230,232,230,0);
 }
 
 .left-container {
     grid-column: 1 / span 1;
-    background: #344966;
-    color: whitesmoke;
+    /* background: #344966; */
+    background-image: url(../../Images/vertical-food-banner.jpg);
+    background-size: cover;
+    background-position: right;
     display: flex;
     justify-content: center;
+    text-shadow: #474747 3px 5px 2px, 2px 2px 2px rgba(52,73,102,0);
 }
 
-.title-container {
-    margin-top: 30px;
-}
+
 
 .title-container i {
     font-size: 2rem;
@@ -35,24 +51,40 @@
 }
 
 .title-container h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     display: inline-block;
     margin-left: 15px;
+    font-family: 'Chronicle Display', serif;
 }
 
 
 .right-container {
     grid-column: 2 / span 1;
-    background: #D7EBBA;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    color: black;
+    background: white;
+    text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+    font-family: 'Stellar', sans-serif;
+    text-align: center;
 }
 
 .custom-form > input {
     display: block;
-    margin: 30px 0 30px 0;
+    margin: 20px auto;
+    width: 150px;
+}
+
+.all-results {
+    background: whitesmoke;
+}
+
+.num-results-display {
+    font-size: 2rem;
+    margin: 50px;
+    font-family: 'Stellar', sans-serif;
 }
 
 .result-container {
@@ -61,15 +93,75 @@
     flex-flow: column;
     justify-content: space-evenly;
     align-items: center;
+    background-color: whitesmoke;
+}
+
+.result-title {
+    font-size: 3rem;
+    font-family: 'Chronicle Display', serif;
+    letter-spacing: 1rem;
+    margin: 15px;
 }
 
 .result-img-container {
     width: 800px;
     height: 500px;
     overflow: hidden;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
 }
 
 .result-img {
     width: 100%;
     height: 100%;
+}
+
+.open-status {
+    margin: 50px 10px;
+    font-size: 2rem;
+    font-family: 'Stellar', sans-serif;
+}
+
+.open-span {
+    color: #FFFFFF;
+    background: #912C22;
+    text-shadow: 0 0 10px #FFFFFF;
+    padding: 2px 5px;
+    border: 3px solid black;
+}
+
+.location {
+    margin: 20px 10px;
+    font-size: 2rem;
+    font-family: 'Stellar', sans-serif;
+}
+
+.address-div {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-family: 'Stellar', sans-serif;
+}
+
+.website-link {
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    border: 3px solid #595959;
+    border-radius: 3%;
+    color: #595959;
+    padding: 15px;
+    margin: 20px;
+    font-family: 'Stellar', sans-serif;
+}
+
+.website-link:hover {
+    background-color: #595959;
+    color: white;
+}
+
+hr {
+    height: 5px;
+    color: black;
+    width: 100vw;
+    margin-top: 15px;
 }

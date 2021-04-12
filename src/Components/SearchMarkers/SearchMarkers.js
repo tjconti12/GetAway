@@ -1,15 +1,22 @@
 import {Marker} from 'react-map-gl';
+import Loader from "react-loader-spinner";
 import './SearchMarkers.css';
-import foodLogo from '../../food-icon.svg';
+import foodLogo from '../../SVGs/food-icon.svg';
 import exploreLogo from '../../TriangleLogo.svg';
 import eventLogo from '../../eventLogo.svg';
 
-const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, introModalOpen }) => {
-    if (introModalOpen) {
+const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, introModalOpen, locationModalOpen }) => {
+    if (introModalOpen || locationModalOpen) {
       return null;
     }
     if (searchData === {} || searchData === null || searchData === undefined) {
-        return <h1>Loading</h1>
+        return (
+          <div className="loader">
+            <h1>Loading...</h1>
+            <Loader type="TailSpin" color="#00BFFF" height={80} width={80} />
+          </div>
+        )
+         
     } else if (searchData.total === 0) {
       return <h1>No Results Found</h1>
     } else if (searchType == 'events?') {
@@ -29,7 +36,7 @@ const SearchMarkers = ({ searchData, setSelected, searchType, searchCategory, in
         </div>
       )
     }
-    console.log(searchData)
+    
     return (
         <div>
             {searchData.businesses.map((business, i) => {

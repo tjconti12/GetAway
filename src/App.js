@@ -1,5 +1,5 @@
 import './App.css';
-import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Link, useHistory } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
 import Map from './Components/Map/Map';
@@ -13,6 +13,7 @@ import Navbar from './Components/Navbar/Navbar';
 import CustomSearch from './Components/CustomSearch/CustomSearch';
 import IntroModal from './Components/Modal/IntroModal';
 import LocationModal from './Components/Modal/LocationModal';
+import CustomResults from './Components/CustomSearch/CustomResults/CustomResults';
 
 
 
@@ -41,7 +42,75 @@ const routes = [
 ]
 
 export default function App () {
-  console.log(Date.now());
+  
+  const history = useHistory();
+
+  const [city, setCity] = useState(null);
+  const [searchTerm, setsearchTerm] = useState(null);
+  const [numOfResults, setNumOfResults] = useState(1);
+  const [resultData, setResultData] = useState(null);
+
+  const handleCityChange = (event) => {
+      setCity(event.target.value);
+  }
+
+  const handleTermChange = (event) => {
+      setsearchTerm(event.target.value);
+  }
+
+  const handleNumOfResultsChange = (event) => {
+      setNumOfResults(event.target.value);
+  }
+
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      console.log(city, searchTerm, numOfResults);
+      getCustomSearch();
+      history.push('/SearchResults');
+  }
+
+  const customSearchParams = {
+      baseUrl: 'https://project2-proxy.herokuapp.com/https://api.yelp.com/v3/businesses/search?',
+      apiKey: process.env.REACT_APP_YELP_KEY,
+        
+    }
+
+  const getCustomSearch = async () => {
+      try {
+        const response = await fetch(`${customSearchParams.baseUrl}term=${searchTerm}&location=${city}&limit=${numOfResults}`, {
+          "method": "GET",
+          "headers": {
+            "Authorization": `Bearer ${customSearchParams.apiKey}`
+          }
+        });
+        const data = await response.json();
+        setResultData(data);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+  useEffect(() => {
+      console.log(resultData)
+  }, [resultData])
+
+
+  const handleMapDetailClick = () => {
+    history.push('/SearchResults')
+    console.log('pussssheddd')
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Map viewport state
   const [viewport, setViewport] = useState({
@@ -154,20 +223,24 @@ export default function App () {
       </Route>
       <Route exact path="/Search">
         <Navbar setIntroModalOpen={setIntroModalOpen} ></Navbar>
-        <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory}>
+        <Map searchData={searchData} viewport={viewport} setViewport={setViewport} mapRef={mapRef} searchType={searchType} searchCategory={searchCategory} introModalOpen={introModalOpen} locationModalOpen={locationModalOpen} setResultData={setResultData} handleMapDetailClick={handleMapDetailClick}>
           <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef} closeLocationModal={closeLocationModal} introModalOpen={introModalOpen}></SearchBar>
         </Map>
         <LocationModal isOpen={locationModalOpen} close={closeLocationModal} setIntroModalOpen={setIntroModalOpen} getUserLocation={getUserLocation} viewport={viewport} setViewport={setViewport} setSearchViewport={setSearchViewport} mapRef={mapRef} containerRef={containerRef}></LocationModal>
       </Route>
       <Route path="/Map">
         <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
-        <Map viewport={viewport} setViewport={setViewport} mapRef={mapRef}>
-          <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef}></SearchBar>
+        <Map viewport={viewport} setViewport={setViewport} mapRef={mapRef} handleMapDetailClick={handleMapDetailClick}>
+          <SearchBar setViewport={setViewport} viewport={viewport} setSearchViewport={setSearchViewport} mapRef={mapRef} setResultData={setResultData}></SearchBar>
         </Map>
       </Route>
       <Route path="/CustomSearch">
         <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
-        <CustomSearch></CustomSearch>
+        <CustomSearch handleSubmit={handleSubmit} handleCityChange={handleCityChange} handleTermChange={handleTermChange} handleNumOfResultsChange={handleNumOfResultsChange}></CustomSearch>
+      </Route>
+      <Route path="/SearchResults">
+        <Navbar setIntroModalOpen={setIntroModalOpen}></Navbar>
+        <CustomResults resultData={resultData}></CustomResults>
       </Route>
     </div>
     

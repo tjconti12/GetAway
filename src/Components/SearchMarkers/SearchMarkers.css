@@ -5,12 +5,25 @@
 }
 
 .marker-btn img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 3px solid black;
+    padding: 2px;
+    border-radius: 50%;
 }
 
-.marker-btn:focus {
-    background-color: rgba(255,255,255,0.1);
-    padding: 0;
-    outline-color: black;
+.marker-btn:hover img {
+    background-color: #aaaaaa;
+}
+
+.loader {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.loader h1 {
+    font-family: 'Chronicle Display', serif;
 }

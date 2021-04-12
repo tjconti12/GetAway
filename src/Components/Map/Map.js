@@ -11,7 +11,7 @@ const geolocateControlStyle= {
     bottom: 25
 }
 
-const Map = ({ searchData, viewport, setViewport, mapRef, children, searchType, searchCategory, introModalOpen }) => {
+const Map = ({ searchData, viewport, setViewport, mapRef, children, searchType, searchCategory, introModalOpen, locationModalOpen, setResultData, handleMapDetailClick }) => {
     
 
     const [selected, setSelected] = useState(null);
@@ -35,8 +35,8 @@ const Map = ({ searchData, viewport, setViewport, mapRef, children, searchType, 
             
             <GeolocateControl style={geolocateControlStyle}  />    
             
-            <SearchMarkers searchData={searchData} setSelected={setSelected} searchType={searchType} searchCategory={searchCategory} introModalOpen={introModalOpen}></SearchMarkers>
-            <PopupComponent selected={selected} setSelected={setSelected} searchType={searchType}></PopupComponent>
+            <SearchMarkers searchData={searchData} setSelected={setSelected} searchType={searchType} searchCategory={searchCategory} introModalOpen={introModalOpen} locationModalOpen={locationModalOpen}></SearchMarkers>
+            <PopupComponent selected={selected} setSelected={setSelected} searchType={searchType} setResultData={setResultData} handleMapDetailClick={handleMapDetailClick}></PopupComponent>
             {children}
             </ReactMapGL>
         </div>
