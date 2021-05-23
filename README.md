@@ -1,6 +1,6 @@
 # GETAW&#x25B5;Y
 ![Home Page](./src/Images/HomePage.png)
-The ideal app for travelers and locals! Getaway is a quick and easy way to find a great local eatery, local hot spot, or a fun event around the corner. Currently all data is being pulled from the Yelp Api. View live here at https://tjconti12.github.io/GetAway/#/
+The ideal app for travelers and locals! Getaway is a quick and easy way to find a great local eatery, local hot spot, or a fun event around the corner. Currently all data is being pulled from the Yelp Api. View live here at https://get-away.netlify.app/#/
 
 ## Motivation
 I have always been inspired to make an application that focuses on locating great local things to do. The best way to find cool new spots is to see what others have said about it. This is an early release, however the goal is to add a lot more features that really make this application stand out. 
